@@ -63,3 +63,8 @@ main
 
 # Arquivos temporários
 *.log
+
+# Arquivos de teste
+
+*.fasta
+*.txt

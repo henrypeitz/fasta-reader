@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "linkedlist.h"
 #include <string.h>
-#include "func_utils.c"
+#include "../utils/func_utils.c"
 
 void list_create(LinkedList *list)
 {
