@@ -40,7 +40,10 @@ int main()
         }
     }
 
-    ll_print(&list);
+    // ll_print(&list);
+    // ll_stats(&list);
+    // ll_complement(&list);
+    // ll_reverse_complement(&list);
 
     ll_free(&list);
     fclose(p);

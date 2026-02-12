@@ -54,3 +54,12 @@ dkms.conf
 # End of https://mrkandreev.name/snippets/gitignore-generator/#C
 
 /home/henrypeitz/Projetos/fasta-reader/main
+main
+*.out
+*.exe
+main
+# Arquivos objeto
+*.o
+
+# Arquivos temporários
+*.log
