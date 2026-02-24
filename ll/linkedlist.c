@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "linkedlist.h"
 #include <string.h>
-#include "../utils/func_utils.c"
+#include "../utils/func_utils.h"
 
 void list_create(LinkedList *list)
 {
@@ -10,7 +10,7 @@ void list_create(LinkedList *list)
     list->size = 0;
 }
 
-Node *ll_push_back(LinkedList *list, const char *buffer)
+Node *ll_push_back(LinkedList *list, const char *buffer, const char *header)
 {
 
     Node *newNode = malloc(sizeof(Node));
@@ -20,22 +20,24 @@ Node *ll_push_back(LinkedList *list, const char *buffer)
         return NULL;
     }
 
-    strncpy(newNode->data, buffer, 4096);
-    newNode->data[4095] = '\0';
+    strncpy(newNode->header, header, sizeof(newNode->header) - 1);
+    newNode->header[sizeof(newNode->header) - 1] = '\0';
+
+    newNode->data[0] = '\0'; // sequência começa vazia
     newNode->next = NULL;
 
     if (list->head == NULL)
     {
+
+        // The past solution was something like O(n^2) cuz i did not notice using tail would be more efficient
+
         list->head = newNode;
+        list->tail = newNode;
     }
     else
     {
-        Node *current = list->head;
-        while (current->next != NULL)
-        {
-            current = current->next;
-        }
-        current->next = newNode;
+        list->tail->next = newNode;
+        list->tail = newNode;
     }
 
     list->size++;
@@ -45,14 +47,16 @@ Node *ll_push_back(LinkedList *list, const char *buffer)
 
 void ll_print(LinkedList *list)
 {
+    printf("\n--------- YOUR ANALYSIS START HERE ---------\n");
     Node *current = list->head;
     int count = 1;
     while (current != NULL)
     {
         int len = strlen(current->data);
-        printf("ANÁLISE %d:\n", count);
+        printf("%s\n", current->header);
+        printf("ANALYSIS %d:\n", count);
 
-        for (int i = 0; i <= len - 3; i += 3)
+        for (int i = 0; i + 2 < len; i += 3)
         {
             char codon[4];
             codon[0] = current->data[i];
@@ -86,18 +90,21 @@ void ll_free(LinkedList *list)
     list->head = NULL;
     list->size = 0;
 
-    printf("Freeing some space... \n");
+    printf("The allocated memory was successfully freed. \n");
 }
 
 void ll_stats(LinkedList *list)
 {
+    printf("\n--------- YOUR ANALYSIS START HERE ---------\n");
+
     Node *current = list->head;
     int node_count = 1;
 
     while (current != NULL)
     {
         long len = strlen(current->data);
-        long gc_count = 0;
+        long g_count = 0;
+        long c_count = 0;
         long a_count = 0;
         long t_count = 0;
         long others = 0;
@@ -109,8 +116,10 @@ void ll_stats(LinkedList *list)
             if (base >= 'a' && base <= 'z')
                 base -= 32;
 
-            if (base == 'G' || base == 'C')
-                gc_count++;
+            if (base == 'G')
+                g_count++;
+            else if (base == 'C')
+                c_count++;
             else if (base == 'A')
                 a_count++;
             else if (base == 'T')
@@ -119,22 +128,28 @@ void ll_stats(LinkedList *list)
                 others++;
         }
 
-        double gc_percent = (len > 0) ? ((double)gc_count / len) * 100.0 : 0.0;
+        // G and C must be counted in different variables.
 
+        double gc_percent = (len > 0) ? ((double)(g_count + c_count) / len) * 100.0 : 0.0;
+
+        printf("%s\n", current->header);
         printf("--- Stats Node %d ---\n", node_count);
         printf("Length: %ld bp\n", len);
         printf("GC Content: %.2f%%\n", gc_percent);
         printf("Bases: A:%ld C:%ld G:%ld T:%ld N/Other:%ld\n\n",
-               a_count, (gc_count - (gc_count / 2)), (gc_count / 2), t_count, others);
+               a_count, c_count, g_count, t_count, others);
 
         current = current->next;
         node_count++;
     }
+
+    printf("\n--------- YOUR ANALYSIS END HERE ---------\n");
 }
 
 void ll_complement(LinkedList *list)
 
 {
+    printf("\n--------- YOUR ANALYSIS START HERE ---------\n");
 
     Node *current = list->head;
     int count = 0;
@@ -142,7 +157,8 @@ void ll_complement(LinkedList *list)
     while (current != NULL)
     {
         int len = strlen(current->data);
-        printf("ANÁLISE %d:\n", count);
+        printf("%s\n", current->header);
+        printf("ANALYSIS %d:\n", count);
 
         for (int i = 0; i <= len - 3; i += 3)
         {
@@ -165,6 +181,8 @@ void ll_complement(LinkedList *list)
 
 void ll_reverse_complement(LinkedList *list)
 {
+    printf("\n--------- YOUR ANALYSIS START HERE ---------\n");
+
     Node *current = list->head;
     int count = 1;
 
@@ -172,7 +190,8 @@ void ll_reverse_complement(LinkedList *list)
     {
 
         int len = strlen(current->data);
-        printf("ANÁLISE %d (Reverse Complement):\n", count);
+        printf("%s\n", current->header);
+        printf("ANALYSIS %d (Reverse Complement):\n", count);
 
         int printed_chars = 0;
 

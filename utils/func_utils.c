@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "func_utils.h"
 
 const char *get_amino_acid(const char *codon)
 {
