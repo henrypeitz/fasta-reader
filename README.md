@@ -29,7 +29,8 @@ To elevate this project quality, the following architectural upgrades are planne
 3. **Algorithmic Optimization:**
 Replace linear codon table lookup with direct index mapping to reduce constant overhead.
 4. **Data Structure Refactoring:** Based on further evaluation, a dynamic array is likely a more appropriate data structure than a linked list and will be implemented in v2. This will prevent truncation and eliminate the 4KB sequence limit.
-5. **GUI Implementation:** Develop a lightweight Graphical User Interface to make the tool accessible to end-users outside the terminal.
+5. **CLI flags and modular execution:** Evolve the tool into a fully configurable command-line utility with feature flags such as --gc, --reverse, --translate, --orf, and --search <motif>, allowing users to selectively execute biological analyses and improving extensibility, usability, and architectural modularity.
+6. **ORF implementation:** include Open Reading Frame (ORF) detection to identify coding regions by scanning sequences across all forward reading frames, detecting canonical start and stop codons, reporting ORF positions and lengths.
 
 ## Build
 ``` 
