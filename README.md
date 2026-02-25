@@ -8,7 +8,7 @@ This project explores low-level memory management and custom data structures in 
 ## Current Architecture
 The parser currently relies on a custom Linked List implementation to store sequences in memory. The core mechanism involves reading the FASTA file line-by-line and dynamically appending sequence data to the nodes. 
 
-In the future, I hope to upgrade the sequence buffer from a fixed-size array to a dynamically allocated using `malloc` and `realloc`. This removes artificial buffer caps and allows the program to scale up to the limits of available system memory.
+In the future, the sequence buffer will be upgraded from a fixed-size array inside each node to a dynamically allocated buffer using malloc and realloc. This removes artificial size limits and allows the program to scale up to available system memory.
 
 ## Known Limitations & Trade-offs
 While functional, this project is still evolving. Here are the current main technical limitations:
